@@ -1,0 +1,49 @@
+N = 4
+board[4][4] initialized to 0
+
+FUNCTION solveQueens(row):
+    IF row == N:
+        PRINT board
+        RETURN
+
+    FOR col FROM 0 TO N-1:
+        IF isSafe(row, col) == TRUE:
+            board[row][col] = 1      // place queen
+            solveQueens(row + 1)     // recursive call
+            board[row][col] = 0      // backtrack
+
+FUNCTION isSafe(row, col):
+    // Check column above
+    FOR i FROM 0 TO row-1:
+        IF board[i][col] == 1:
+            RETURN FALSE
+
+    // Check upper-left diagonal
+    SET i = row - 1, j = col - 1
+    WHILE i >= 0 AND j >= 0:
+        IF board[i][j] == 1:
+            RETURN FALSE
+        i = i - 1
+        j = j - 1
+
+    // Check upper-right diagonal
+    SET i = row - 1, j = col + 1
+    WHILE i >= 0 AND j < N:
+        IF board[i][j] == 1:
+            RETURN FALSE
+        i = i - 1
+        j = j + 1
+
+    RETURN TRUE
+
+FUNCTION printBoard():
+    FOR each row in board:
+        FOR each cell in row:
+            IF cell == 1:
+                PRINT "Q "
+            ELSE:
+                PRINT ". "
+        PRINT newline
+
+MAIN:
+    CALL solveQueens(0)
